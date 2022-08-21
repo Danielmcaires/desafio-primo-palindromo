@@ -1,5 +1,5 @@
 
-qtd = 1000
+qtd = 200000
 
 def calcula_pi(x):
     k,a,b,a1,b1 = 2,4,1,12,4
@@ -39,7 +39,7 @@ def ePalindrome(y):
 
 digitos = ''.join([str(n) for n in list(calcula_pi(qtd))])
 p1 = 0
-p2 = 3
+p2 = 9
 verificador = 0
 
 while p2 <= qtd:
