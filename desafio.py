@@ -53,7 +53,4 @@ while p2 <= qtd:
     p1 += 1
     p2 += 1
 
-if verificador == 1:
-    print(digitos[p1:p2])
-else:
-    print("não encontrado nenhum número")
+
