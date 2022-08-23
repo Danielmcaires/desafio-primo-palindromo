@@ -5,6 +5,12 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>first_pi_prime_palindrome</RootNamespace>
     <StartupObject>first_pi_prime_palindrome.Program</StartupObject>
+    <ApplicationIcon />
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="RestSharp" Version="108.0.1" />
+  </ItemGroup>
 
 </Project>
