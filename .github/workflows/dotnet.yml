@@ -21,6 +21,4 @@ jobs:
       run: dotnet restore
       working-directory: ./first-pi-prime-palindrome
     - name: Build
-      run: dotnet build first-pi-prime-palindrome.sln --no-restore
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet build first-pi-prime-palindrome.csproj --no-restore
