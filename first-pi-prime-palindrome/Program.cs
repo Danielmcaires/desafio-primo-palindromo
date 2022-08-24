@@ -1,5 +1,4 @@
-﻿using RestSharp;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -19,6 +18,8 @@ namespace first_pi_prime_palindrome
 
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
+            HttpClient client = new HttpClient();
+            string piInterval = "";
             int startingDecimal = 0;
             bool primePalindromeFound = false;
 
@@ -26,17 +27,17 @@ namespace first_pi_prime_palindrome
             {
                 string url = "https://api.pi.delivery/v1/pi?start=" + startingDecimal + "&numberOfDigits=1000&radix=10";
                 startingDecimal += 980;
-                var client = new RestClient(url);
+                
+                client.BaseAddress = new Uri(url)
+                HttpResponseMessage response = await client.GetAsync(url);
 
-                var response = client.Execute<ApiResponse>(new RestRequest());
-
-                if (response.IsSuccessful)
+                if (response.IsSuccessStatusCode)
                 {
-                    var piInterval = response.Data;
+                    piInterval = await response.Content.ReadAsStringAsync();
                     Console.WriteLine("Checking palindrome in position" + startingDecimal + "of Pi decimals");
                 }
 
-                bool isPiFound = program.LookForPrimePalindrome(piInterval?);
+                bool isPiFound = program.LookForPrimePalindrome(piInterval);
 
                 if (isPiFound) primePalindromeFound = true;
             }
