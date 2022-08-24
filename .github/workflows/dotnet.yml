@@ -22,3 +22,5 @@ jobs:
       working-directory: ./first-pi-prime-palindrome
     - name: Build
       run: dotnet build first-pi-prime-palindrome.csproj --no-restore
+      working-directory: ./first-pi-prime-palindrome
+
