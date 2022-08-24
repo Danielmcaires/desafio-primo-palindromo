@@ -51,24 +51,31 @@ def busca_numero(x):
 cont_url = 0
 cont_while = 0
 iteracao = 0
+erros = 0
 
 while cont_while == 0:
     url = "https://api.pi.delivery/v1/pi?start=" + str(cont_url) + "&numberOfDigits=1000&radix=10"
-    cont_url = cont_url + 980
+        
+    try:
+        pi_fetch = requests.get(url)
+        pi_dict = pi_fetch.json()
+        pi = pi_dict['content']
+    
+        resposta_numero = busca_numero(pi)
+        iteracao +=1
+        
+        if iteracao % 100 == 0 or iteracao == 1:
+            print('url: ',url,'\niteracao número: ',iteracao,'   ', erros, 'erros foram detectados    ','   número:  ', pi, "\n")
 
-    pi_fetch = requests.get(url)
-    pi_dict = pi_fetch.json()
-    pi = pi_dict['content']
-   
-    resposta_numero = busca_numero(pi)
-    iteracao +=1
-    if iteracao % 100 == 0 or iteracao == 1:
-        print(pi, "\n")
-
-    if resposta_numero == False:
+        if resposta_numero == False:
+            cont_while = 0
+            cont_url = cont_url + 980
+        else:
+            print('número encontrado: ', resposta_numero)
+            print('demorou', time.time()-start, 'segundos')
+            print("O script realizou", iteracao, "iterações")
+            print("erros:", erros)
+            cont_while = 1
+    except:
         cont_while = 0
-    else:
-        print('número encontrado: ', resposta_numero)
-        print('demorou', time.time()-start, 'segundos')
-        print("O script realizou", iteracao, "iterações")
-        cont_while = 1
+        erros += 1
