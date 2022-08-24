@@ -1,5 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -19,25 +23,25 @@ namespace first_pi_prime_palindrome
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
             HttpClient client = new HttpClient();
-            string piInterval = "";
+            var piInterval = new Dictionary<string,string>();
             int startingDecimal = 0;
             bool primePalindromeFound = false;
 
             while (!primePalindromeFound)
             {
                 string url = "https://api.pi.delivery/v1/pi?start=" + startingDecimal + "&numberOfDigits=1000&radix=10";
-                startingDecimal += 980;
-                
-                client.BaseAddress = new Uri(url)
-                HttpResponseMessage response = await client.GetAsync(url);
 
+                var response = await client.GetAsync(url);
                 if (response.IsSuccessStatusCode)
                 {
-                    piInterval = await response.Content.ReadAsStringAsync();
-                    Console.WriteLine("Checking palindrome in position" + startingDecimal + "of Pi decimals");
+                    var values = await response.Content.ReadAsStringAsync();
+                    piInterval = JsonConvert.DeserializeObject<Dictionary<string, string>>(values);
+                    Console.WriteLine("Checking palindrome starting in position " + startingDecimal + " of Pi decimals");
+                    startingDecimal += 980;
+
                 }
 
-                bool isPiFound = program.LookForPrimePalindrome(piInterval);
+                bool isPiFound = program.LookForPrimePalindrome(piInterval.FirstOrDefault().Value);
 
                 if (isPiFound) primePalindromeFound = true;
             }
@@ -47,6 +51,7 @@ namespace first_pi_prime_palindrome
             ts.Hours, ts.Minutes, ts.Seconds,
             ts.Milliseconds / 10);
             Console.WriteLine("RunTime " + elapsedTime);
+            Console.ReadLine();
 
         }
 
