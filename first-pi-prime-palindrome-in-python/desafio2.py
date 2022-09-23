@@ -1,3 +1,8 @@
+# O segundo desafio foi encontrar o primeiro número primo e palíndromo de 21 dígitps, na expansão de Pi
+# Para o segundo desafio foi utilizada uma API q a cada chamada retorna 1000 dígitos da expansão de Pi
+# Após ser analisado pouco mais de 1 bilhão de casas o script foi interrompido sem achar o resultado
+# Foram adicionado pontos em que eram impressos na tela em que iteração o script se encontrava
+
 import requests
 import json
 import time
